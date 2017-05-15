@@ -14,8 +14,11 @@ public class ex_p08_StringEncrytion {
         for (int i = 0; i < n; i++) {
             String letter = scanner.nextLine();
 
-            encryptedString += encrypt(letter) + "%n");
+            char charLetter = letter.charAt(0);
+
+            encryptedString += encrypt(charLetter);
         }
+        System.out.println(encryptedString);
 
 
 
@@ -24,17 +27,29 @@ public class ex_p08_StringEncrytion {
     static String encrypt(char letter) {
         String encryptedLetter = "";
 
-        int letterASCIInumber = (int) letter;
+        int letterAsASCIIdecimalNumber = (int) letter;
 
-        String letterASCIInumberToStr = String.valueOf(letterASCIInumber);
+        String letterASCIInumberToStr = String.valueOf(letterAsASCIIdecimalNumber);
         int lengthOfASCII = letterASCIInumberToStr.length();
-        if (lengthOfASCII < 3) {
+        int lastDigit = 0;
+        int firstDigit = 0;
+
+        if (lengthOfASCII == 2){
+            lastDigit = letterAsASCIIdecimalNumber % 10;
+            firstDigit = letterAsASCIIdecimalNumber / 10;
             encryptedLetter += letterASCIInumberToStr;
-        } else if (lengthOfASCII < 4) {
-            int lastDigit = letterASCIInumber % 10;
-            int firstDigit = letterASCIInumber / 100;
+        } else if (lengthOfASCII == 3){
+            lastDigit = letterAsASCIIdecimalNumber % 10;
+            firstDigit = letterAsASCIIdecimalNumber /100;
             encryptedLetter += String.valueOf(firstDigit) + String.valueOf(lastDigit);
         }
+        int firstSymbolFromEncryption = letterAsASCIIdecimalNumber + lastDigit;
+        char charFirstSymbolFromEncryption = (char) firstSymbolFromEncryption;
+        int lastSymbolFromEncryption = letterAsASCIIdecimalNumber - firstDigit;
+        char charLastSymbolFromEncryption = (char) lastSymbolFromEncryption;
+
+        encryptedLetter = charFirstSymbolFromEncryption + encryptedLetter + charLastSymbolFromEncryption;
+
         return encryptedLetter;
     }
 }
